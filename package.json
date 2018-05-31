@@ -1,0 +1,14 @@
+{
+  "name": "@behaver/angle",
+  "version": "1.0.0",
+  "description": "The entity of angle.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angle"
+  ],
+  "author": "Sanwan Dong",
+  "license": "ISC"
+}
