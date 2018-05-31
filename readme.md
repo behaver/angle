@@ -1,6 +1,6 @@
 # Angle JS模块
 
-[![GitHub license](https://img.shields.io/badge/license-ISC-brightgreen.svg)]
+[![GitHub license](https://img.shields.io/badge/license-ISC-brightgreen.svg)](#)
 
 ## 简介
 
