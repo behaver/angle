@@ -17,7 +17,7 @@
 
 `npm install @behaver/angle`
 
-角度单位间数值的转换
+角度单位间数值的转换：
 
 ```js
 var Angle = require('@behaver/angle');
@@ -28,7 +28,7 @@ console.log(a.degree());
 
 本例将 **弧度值** 转化为 **角度值** ，将会输出数值 *180*
 
-直接通过构造函数参数初始化角度对象
+直接通过构造函数参数初始化角度对象：
 
 ```js
 var Angle = require('@behaver/angle');
