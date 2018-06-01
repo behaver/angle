@@ -1,21 +1,30 @@
 'use strict';
 
 /**
- * 角度类
- * 专门用于各种角度单位的转换
- * @author Stalker <qianxing@yeah.net>
- * @version 0.1.0
+ * Angle 对象
+ * 
+ * Angle 对象用于处理各种角度单位数值
+ * 
+ * @author 董三碗 <qianxing@yeah.net>
+ * @version 1.1.0
  */
-export default function () {
-    /**
-     * 各种角度值
-     */
+export default function (num, unit) {
+
+    // 各角度数值缓存对象
     var angle = {};
 
-    /**
-     * 角度毫秒值
-     */
+    // 角度对应毫秒值
     var milliseconds = 0;
+
+    if (typeof num === 'number') {
+        switch (unit) {
+            case 'ms':
+                this.milliseconds(num);
+                break;
+            default:
+                this.degree(num);
+        }
+    }
 
     /**
      * 获取或设置毫秒值
