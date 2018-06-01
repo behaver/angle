@@ -17,7 +17,7 @@
 
 `npm install @behaver/angle`
 
-角度的单位转换
+角度单位间数值的转换
 
 ```js
 var Angle = require('@behaver/angle');
