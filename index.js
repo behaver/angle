@@ -153,6 +153,7 @@ export default function (num, unit) {
 
     /**
      * 获取或设置时角值
+     * 
      * @return {[type]} [description]
      */
     this.time = function (a) {
@@ -196,6 +197,7 @@ export default function (num, unit) {
 
     /**
      * 获取或设置日常标准角度值
+     * 
      * @return {[type]} [description]
      */
     this.general = function (a) {

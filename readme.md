@@ -28,6 +28,16 @@ console.log(a.degree());
 
 本例将 **弧度值** 转化为 **角度值** ，将会输出数值 *180*
 
+直接通过构造函数参数初始化角度对象
+
+```js
+var Angle = require('@behaver/angle');
+var a = new Angle(15, 'th');
+console.log(a.degree());
+```
+
+本例初始化了一个时角为15的角度对象，最后输出 *225*
+
 ## API
 
 `degree()`
