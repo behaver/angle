@@ -8,5 +8,17 @@
 
 ## 用例
 
+基本的单位转换操作
+
+```js
+var Angle = require('@behaver/angle');
+var a = new Angle();
+a.radian(Math.PI);
+console.log(a.degree());
+```
+
+本例示范将**弧度值**转化为**角度值**，将会输出数值 *180*
+
 
 ## API文档
+
