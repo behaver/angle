@@ -16,178 +16,139 @@ export default function (num, unit) {
     // 角度对应毫秒值
     var milliseconds = 0;
 
-    // 初始化
-    if (typeof num === 'number') {
-        switch (unit) {
-            case 'ms':
-                this.milliseconds(num);
-                break;
-            default:
-                this.degree(num);
-        }
+    const scalesMap = {
+        ms: 1,
+        s: 1000,
+        m: 60000,
+        d: 3600000,
+        r: 648000000 * Math.PI,
+        th: 54000000,
+        tm: 900000,
+        ts: 15000,
+        tms: 15,
+    }
+
+    // 初始值设定
+    if (typeof num === 'number') _cp(unit, num);
+
+    /**
+     * 设置/获取 公共过程
+     * 
+     * @param  {[type]} unit [description]
+     * @param  {[type]} num  [description]
+     * @return {[type]}      [description]
+     */
+    var _cp = function (unit, num) {
+        if (unit && unit in scalesMap) {
+            if (num === undefined) {
+                if (angle[unit] === undefined) {
+                    return angle[unit] = milliseconds / scalesMap[unit];
+                } else {
+                    return angle[unit];
+                }
+            } else { // 设置角秒值
+                angle = {};
+                angle[unit] = num;
+                milliseconds = num * scalesMap[unit];
+                return this;
+            };
+        } else throw Error('Unknow angle unit.');
     }
 
     /**
      * 获取或设置毫秒值
-     * @param  {[type]} ms [description]
+     * 
+     * @param  {[type]} num [description]
      * @return {[type]}    [description]
      */
-    this.milliseconds = function (ms) {
-        if (ms === undefined) { // 获取毫秒值
+    this.milliseconds = function (num) {
+        if (num === undefined) { // 获取毫秒值
             return milliseconds;
         } else { // 设置毫秒值
             angle = {};
-            milliseconds = ms;
+            milliseconds = num;
             return this;
         }
     }
 
     /**
      * 获取或设置角秒值
-     * @param  {[type]} s [description]
+     * 
+     * @param  {[type]} num [description]
      * @return {[type]}      [description]
      */
-    this.seconds = function (s) {
-        if (s === undefined) { // 获取角秒值
-            if (angle.seconds === undefined) {
-                return angle.seconds = milliseconds / 1000;
-            } else {
-                return angle.seconds;
-            }
-        } else { // 设置角秒值
-            angle = { "seconds": s };
-            milliseconds = s * 1000;
-            return this;
-        };
+    this.seconds = function (num) {
+        return _cp('s', num);
     }
 
     /**
      * 获取或设置角分值
-     * @param  {[type]} m [description]
+     * 
+     * @param  {[type]} num [description]
      * @return {[type]}   [description]
      */
-    this.minutes = function (m) {
-        if (m === undefined) { // 获取角分值
-            if (angle.minutes === undefined) {
-                return angle.minutes = milliseconds / 60000;
-            } else {
-                return angle.minutes;
-            }
-        } else { // 设置角分值
-            angle = { "minutes": m };
-            milliseconds = m * 60000;
-            return this;
-        };
+    this.minutes = function (num) {
+        return _cp('m', num);
     }
 
     /**
      * 获取或设置角度值
-     * @param  {[type]} degree [description]
+     * 
+     * @param  {[type]} num [description]
      * @return {[type]}        [description]
      */
-    this.degree = function (degree) {
-        if (degree === undefined) { // 获取角度值
-            if (angle.degree === undefined) {
-                return angle.degree = milliseconds / 3600000;
-            } else {
-                return angle.degree;
-            }
-        } else { // 设置角度值
-            angle = { "degree": degree };
-            milliseconds = degree * 3600000;
-            return this;
-        };
+    this.degree = function (num) {
+        return _cp('d', num);
     }
 
     /**
      * 获取或设置弧度值
-     * @param  {[type]} radian [description]
+     * 
+     * @param  {[type]} num [description]
      * @return {[type]}        [description]
      */
-    this.radian = function (radian) {
-        if (radian === undefined) { // 获取弧度值
-            if (angle.radian === undefined) {
-                return angle.radian = milliseconds / 648000000 * Math.PI;
-            } else {
-                return angle.radian;
-            }
-        } else { // 设置弧度值
-            angle = { "radian": radian };
-            milliseconds = radian * 648000000 / Math.PI;
-            return this;
-        };
+    this.radian = function (num) {
+        return _cp('r', num);
     }
 
     /**
      * 获取或设置时角时
-     * @return {[type]} [description]
+     * 
+     * @param  {[type]} num [description]
+     * @return {[type]}     [description]
      */
-    this.tHours = function (hours) {
-        if (hours === undefined) { // 获取角时值
-            if (angle.tHours === undefined) {
-                return angle.tHours = milliseconds / 54000000;
-            } else {
-                return angle.tHours;
-            }
-        } else { // 设置角时值
-            angle = { "tHours": hours };
-            milliseconds = hours * 54000000;
-            return this;
-        };
+    this.tHours = function (num) {
+        return _cp('th', num);
     }
 
     /**
      * 获取或设置时角分
-     * @return {[type]} [description]
+     * 
+     * @param  {[type]} num [description]
+     * @return {[type]}     [description]
      */
-    this.tMinutes = function (minutes) {
-        if (minutes === undefined) { // 获取角时值
-            if (angle.tMinutes === undefined) {
-                return angle.tMinutes = milliseconds / 900000;
-            } else {
-                return angle.tMinutes;
-            }
-        } else { // 设置角时值
-            angle = { "tMinutes": minutes };
-            milliseconds = minutes * 900000;
-            return this;
-        };
+    this.tMinutes = function (num) {
+        return _cp('tm', num);
     }
 
     /**
      * 获取或设置时角秒
-     * @return {[type]} [description]
+     * 
+     * @param  {[type]} num [description]
+     * @return {[type]}     [description]
      */
-    this.tSeconds = function (seconds) {
-        if (seconds === undefined) { // 获取角时值
-            if (angle.tSeconds === undefined) {
-                return angle.tSeconds = milliseconds / 15000;
-            } else {
-                return angle.tSeconds;
-            }
-        } else { // 设置角时值
-            angle = { "tSeconds": seconds };
-            milliseconds = seconds * 15000;
-            return this;
-        };
+    this.tSeconds = function (num) {
+        return _cp('ts', num);
     }
 
     /**
      * 获取或设置时角毫秒
-     * @return {[type]} [description]
+     * 
+     * @param  {[type]} num [description]
+     * @return {[type]}     [description]
      */
-    this.tMilliseconds = function (seconds) {
-        if (seconds === undefined) { // 获取角时值
-            if (angle.tMilliseconds === undefined) {
-                return angle.tMilliseconds = milliseconds / 15;
-            } else {
-                return angle.tMilliseconds;
-            }
-        } else { // 设置角时值
-            angle = { "tMilliseconds": seconds };
-            milliseconds = seconds * 15;
-            return this;
-        };
+    this.tMilliseconds = function (num) {
+        return _cp('tms', num);
     }
 
     /**
@@ -303,6 +264,7 @@ export default function (num, unit) {
 
     /**
      * 将角度转换为一周之内
+     * 
      * @return {[type]} [description]
      */
     this.inRound = function () {
@@ -314,6 +276,7 @@ export default function (num, unit) {
 
     /**
      * 将角度转化为 -180 到 180 之间
+     * 
      * @return {[type]} [description]
      */
     this.inHalf = function () {
