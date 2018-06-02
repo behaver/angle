@@ -30,6 +30,10 @@ export default function (num, unit) {
 
     // 初始值设定
     if (typeof num === 'number') _cp(unit, num);
+    else if (typeof num === 'object') {
+        if (unit == 'dac') this.DAComplex(num);
+        if (unit == 'hac') this.HAComplex(num);
+    }
 
     /**
      * 设置/获取 公共过程
@@ -153,44 +157,42 @@ export default function (num, unit) {
 
     /**
      * 获取或设置时角值
-     * 
+     *
+     * @param  {[type]} hac [description]
      * @return {[type]} [description]
      */
-    this.time = function (a) {
-        if (a === undefined) { // 获取时角值
-            if (angle.time === undefined) { // 生成时角值
-                angle.time = {};
-                var _m = milliseconds
-                angle.time.hours = parseInt(_m / 54000000);
-                _m -= angle.time.hours * 54000000
-                angle.time.minutes = parseInt(_m / 900000);
-                _m -= angle.time.minutes * 900000;
-                angle.time.seconds = _m / 15000;
-                // angle.time.seconds = parseInt(_m / 15000);
-                // _m -= angle.time.seconds * 15000;
-                // angle.time.milliseconds = _m;
-                return angle.time;
-            } else {
-                return angle.time;
-            }
-        } else { // 设置时角值
-            angle = {time: {}};
-            if (typeof(a) === 'object') {
-                angle.time = {
-                    hours: parseInt(a.hours),
-                    minutes: parseInt(a.minutes),
-                    seconds: parseFloat(a.seconds)
-                    // milliseconds: parseInt(a.milliseconds)
+    this.HAComplex = function (hac) {
+        if (hac === undefined) { // 获取时角对象
+            if (angle.hac === undefined) { // 生成时角值
+                angle.hac = {};
+                var _m = milliseconds;
+                angle.hac.hours = parseInt(_m / 54000000);
+                _m = angle.hac.hours % 54000000
+                angle.hac.minutes = parseInt(_m / 900000);
+                _m = angle.hac.minutes % 900000;
+                angle.hac.seconds = parseInt(_m / 15000);
+                _m = angle.hac.seconds % 15000;
+                angle.hac.milliseconds = _m / 15;
+                return angle.hac;
+            } else return angle.hac;
+        } else { // 设置时角对象
+            if (typeof(hac) === 'object') {
+                if (hac.minutes > 59 || hac.minutes < -59) throw Error('The range of tMinutes must be -59 ~ 59.');
+                if (hac.seconds > 59 || hac.seconds < -59) throw Error('The range of tSeconds must be -59 ~ 59.');
+                if (hac.milliseconds > 999 || hac.milliseconds < -999) throw Error('The range of tMilliseconds must be -999 ~ 999.');
+                
+                angle = {
+                    hac: {
+                        hours: hac.hours == undefined ? 0 : parseInt(hac.hours),
+                        minutes: hac.minutes == undefined ? 0 : parseInt(hac.minutes),
+                        seconds: hac.seconds == undefined ? 0 : parseFloat(hac.seconds),
+                        milliseconds: hac.milliseconds == undefined ? 0 : parseInt(hac.milliseconds),
+                    }
                 };
-            } else {
-                throw Error('Illagelity parameters.');
-            }
 
-            if (angle.time.minutes > 60 || angle.time.minutes < -60) throw Error('The range of minutes is -59 - 59.');
-            if (angle.time.seconds > 60 || angle.time.seconds < -60) throw Error('The range of seconds is -59 - 59.');
-            // if (angle.time.milliseconds > 1000 || angle.time.minutes < -1000) throw Error('The range of milliseconds is -999 - 999.');
+                milliseconds = angle.hac.hours * 54000000 + angle.hac.minutes * 900000 + angle.hac.seconds * 15000 + angle.hac.milliseconds * 15;
+            } else throw Error('Illagelity parameters.');
 
-            milliseconds = angle.time.hours * 54000000 + angle.time.minutes * 900000 + angle.time.seconds * 15000;
             return this;
         }
     }
@@ -200,40 +202,42 @@ export default function (num, unit) {
      * 
      * @return {[type]} [description]
      */
-    this.general = function (a) {
-        if (a === undefined) { // 获取日常标准角度值
-            if (angle.general === undefined) { // 生成标准值
-                angle.general = {};
+    this.DAComplex = function (dac) {
+        if (dac === undefined) { // 获取日常标准角度值
+            if (angle.dac === undefined) { // 生成标准值
+                angle.dac = {};
                 var _m = milliseconds
-                angle.general.degree = parseInt(_m / 3600000);
-                _m -= angle.general.degree * 3600000
-                angle.general.minutes = parseInt(_m / 60000);
-                _m -= angle.general.minutes * 60000;
-                angle.general.seconds = parseInt(_m / 1000);
-                _m -= angle.general.seconds * 1000;
-                angle.general.milliseconds = _m;
-                return angle.general;
+                angle.dac.degree = parseInt(_m / 3600000);
+                _m = angle.dac.degree % 3600000
+                angle.dac.minutes = parseInt(_m / 60000);
+                _m = angle.dac.minutes % 60000;
+                angle.dac.seconds = parseInt(_m / 1000);
+                _m = angle.dac.seconds % 1000;
+                angle.dac.milliseconds = _m;
+                return angle.dac;
             } else {
-                return angle.general;
+                return angle.dac;
             }
         } else { // 设置日常标准角度值
-            angle = {general: {}};
-            if (typeof(a) === 'object') {
-                angle.general = {
-                    degree: a.degree === undefined ? 0 : parseInt(a.degree),
-                    minutes: a.minutes === undefined ? 0 : parseInt(a.minutes),
-                    seconds: a.seconds === undefined ? 0 : parseInt(a.seconds),
-                    milliseconds: a.milliseconds === undefined ? 0 : parseInt(a.milliseconds)
+            if (typeof(dac) === 'object') {
+                if (dac.minutes > 59 || dac.minutes < -59) throw Error('The range of minutes is -59 - 59.');
+                if (dac.seconds > 59 || dac.seconds < -59) throw Error('The range of seconds is -59 - 59.');
+                if (dac.milliseconds > 999 || dac.milliseconds < -999) throw Error('The range of milliseconds is -999 - 999.');
+                
+                angle = { 
+                    dac: {
+                        degree: dac.degree == undefined ? 0 : parseInt(dac.degree),
+                        minutes: dac.minutes == undefined ? 0 : parseInt(dac.minutes),
+                        seconds: dac.seconds == undefined ? 0 : parseInt(dac.seconds),
+                        milliseconds: dac.milliseconds == undefined ? 0 : parseInt(dac.milliseconds)
+                    }
                 };
+
+                milliseconds = angle.dac.degree * 3600000 + angle.dac.minutes * 60000 + angle.dac.seconds * 1000 + angle.dac.milliseconds;
             } else {
                 throw Error('Illagelity parameters.');
             }
 
-            if (angle.general.minutes > 60 || angle.general.minutes < -60) throw Error('The range of minutes is -59 - 59.');
-            if (angle.general.seconds > 60 || angle.general.seconds < -60) throw Error('The range of seconds is -59 - 59.');
-            if (angle.general.milliseconds > 1000 || angle.general.minutes < -1000) throw Error('The range of milliseconds is -999 - 999.');
-
-            milliseconds = angle.general.degree * 3600000 + angle.general.minutes * 60000 + angle.general.seconds * 1000 + angle.general.milliseconds;
             return this;
         }
     }
@@ -284,6 +288,13 @@ export default function (num, unit) {
     this.inHalf = function () {
         this.inRound();
         if (milliseconds > 648000000) milliseconds -= 1296000000;
+        return this;
+    }
+
+    this.inRange = function (min, max) {
+        if (max - min == 360) {
+
+        } else throw Error('Illagelity parameters.');
         return this;
     }
 
