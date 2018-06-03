@@ -34,6 +34,10 @@ export default function (num, unit) {
         if (unit == 'dac') this.DAComplex(num);
         if (unit == 'hac') this.HAComplex(num);
     }
+    else if (typeof num === 'string') {
+        if (unit == 'dacs') this.DACString(num);
+        if (unit == 'hacs') this.HACString(num);
+    }
 
     /**
      * 设置/获取 公共过程
