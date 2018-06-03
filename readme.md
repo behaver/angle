@@ -22,8 +22,8 @@
 ```js
 var Angle = require('@behaver/angle');
 var a = new Angle();
-a.radian(Math.PI);
-console.log(a.degree());
+a.radians(Math.PI);
+console.log(a.degrees());
 ```
 
 本例将 **弧度值** 转化为 **角度值** ，将会输出数值： *180*
@@ -33,7 +33,7 @@ console.log(a.degree());
 ```js
 var Angle = require('@behaver/angle');
 var a = new Angle(15, 'th');
-console.log(a.degree());
+console.log(a.degrees());
 ```
 
 本例初始化了一个 *时角* 为 *15* 的角度对象，最后输出： *225*
@@ -54,36 +54,45 @@ Angle 构造函数的第二个参数为 *角度单位* ，可用参数包含：
 
 ## API
 
-`degree()`
+`degrees(num)`
 以 **角度** 为单位，获取/设置 角度数值
 
-`minutes()`
+`minutes(num)`
 以 **角分** 为单位，获取/设置 角度数值
 
-`seconds()`
+`seconds(num)`
 以 **角秒** 为单位，获取/设置 角度数值
 
-`milliseconds()`
+`milliseconds(num)`
 以 **角毫秒** 为单位，获取/设置 角度数值
 
-`radian()`
+`radians(num)`
 以 **弧度** 为单位，获取/设置 角度数值
 
-`tHours()`
+`tHours(num)`
 以 **时角时** 为单位，获取/设置 角度数值
 
-`tMinutes()`
+`tMinutes(num)`
 以 **时角分** 为单位，获取/设置 角度数值
 
-`tSeconds()`
+`tSeconds(num)`
 以 **时角秒** 为单位，获取/设置 角度数值
 
-`tMilliseconds()`
+`tMilliseconds(num)`
 以 **时角毫秒** 为单位，获取/设置 角度数值
 
-`HAComplex()`
+`HAComplex(h, m, s, ms)`
 以 **复合时角对象** 为单位，获取/设置 角度数值
 
-`DAComplex()`
+`DAComplex(d, m, s, ms)`
 以 **复合度角对象** 为单位，获取/设置 角度数值
+
+`HACString(str)`
+以 **复合时角字符串** 为单位，获取/设置 角度数值
+
+`DACString(str)`
+以 **复合度角字符串** 为单位，获取/设置 角度数值
+
+`toString(unit)`
+获取复合 度角\时角 字符串
 
