@@ -300,7 +300,6 @@ export default function (num, unit) {
         }
     }
 
-
     this.toString = function(unit) {
         if (unit == undefined || unit == 'dac') return this.DACString();
         else if (unit == 'hac') return this.HACString();

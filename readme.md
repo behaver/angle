@@ -54,6 +54,25 @@ Angle 构造函数的第二个参数为 *角度单位* ，可用参数包含：
 * `hacs` 复合时角字符串
 * `dacs` 复合度角字符串
 
+使用 *复合角度对象* 并输出 *复合字符串* ：
+
+```js
+var Angle = require('@behaver/angle');
+var a = new Angle();
+a.DAComplex(130, 20, 30, 865);
+console.log(a.HACString());
+a.HAComplex({
+	h: 3,
+	m: 24,
+	s: 30,
+	ms: 453,
+});
+console.log(a.toString());
+```
+
+本例先后给定了 130°20′20.865″ 和 3h24m30s453ms 两个角度值，最后分别输出：
+`` 和 ``
+
 ## API
 
 `degrees(num)`
@@ -96,5 +115,5 @@ Angle 构造函数的第二个参数为 *角度单位* ，可用参数包含：
 以 **复合度角字符串** 为单位，获取/设置 角度数值
 
 `toString(unit)`
-获取复合 度角\时角 字符串
+获取 **复合度角\时角** 字符串
 
