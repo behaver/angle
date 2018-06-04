@@ -8,7 +8,9 @@
  * @author 董三碗 <qianxing@yeah.net>
  * @version 1.1.0
  */
-export default function (num, unit) {
+module.exports = function (num, unit) {
+
+    var self = this;
 
     // 各角度数值缓存对象
     var angle = {};
@@ -46,7 +48,7 @@ export default function (num, unit) {
      * @param  {[type]} num  [description]
      * @return {[type]}      [description]
      */
-    var _cp = function (unit, num) {
+    function _cp(unit, num) {
         if (unit && unit in scalesMap) {
             if (num === undefined) {
                 if (angle[unit] === undefined) {
@@ -58,7 +60,7 @@ export default function (num, unit) {
                 angle = {};
                 angle[unit] = num;
                 milliseconds = num * scalesMap[unit];
-                return this;
+                return self;
             };
         } else throw Error('Unknow angle unit.');
     }
