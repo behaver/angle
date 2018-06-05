@@ -30,17 +30,6 @@ module.exports = function (num, unit) {
         tms: 15,
     }
 
-    // 初始值设定
-    if (typeof num === 'number') _cp(unit, num);
-    else if (typeof num === 'object') {
-        if (unit == 'dac') this.DAComplex(num);
-        if (unit == 'hac') this.HAComplex(num);
-    }
-    else if (typeof num === 'string') {
-        if (unit == 'dacs') this.DACString(num);
-        if (unit == 'hacs') this.HACString(num);
-    }
-
     /**
      * 设置/获取 公共过程
      * 
@@ -252,8 +241,9 @@ module.exports = function (num, unit) {
         if (str === undefined) { // 获取
             var dac = this.DAComplex();
             return dac.d + '°' + dac.m + '′' + (dac.s + dac.ms / 1000) + '"';
-        } else { // 设置日常标准角度值
-            if (r = str.match(/^([-+]?\d+)[^\d-+]+(?:(\d+)[^\d-+]+(?:(\d+)(?:.(\d+))?[^\d-+]*)?)?/)) {
+        } else { // 设置
+            let r = str.match(/^([-+]?\d+)[^\d-+]+(?:(\d+)[^\d-+]+(?:(\d+)(?:.(\d+))?[^\d-+]*)?)?/);
+            if (r) {
                 r[4]  = r[4] ? '0.' + r[4] : '0';
                 angle = { 
                     dac: {
@@ -272,6 +262,7 @@ module.exports = function (num, unit) {
             } else {
                 throw Error('Illagelity parameters.');
             }
+            return this;
         }
     }
 
@@ -279,8 +270,9 @@ module.exports = function (num, unit) {
         if (str === undefined) { // 获取
             var hac = this.DAComplex();
             return hac.d + 'h' + hac.m + 'm' + hac.s + 's' + hac.ms + 'ms';
-        } else { // 设置日常标准角度值
-            if (r = a.match(/^([-+]?\d+)[^\d-+]+(?:(\d+)[^\d-+]+(?:(\d+)(?:.(\d+))?[^\d-+]*)?)?/)) {
+        } else { // 设置
+            let r = a.match(/^([-+]?\d+)[^\d-+]+(?:(\d+)[^\d-+]+(?:(\d+)(?:.(\d+))?[^\d-+]*)?)?/);
+            if (r) {
                 r[4]  = r[4] ? '0.' + r[4] : '0';
                 angle = { 
                     dac: {
@@ -300,6 +292,7 @@ module.exports = function (num, unit) {
                 throw Error('Illagelity parameters.');
             }
         }
+        return this;
     }
 
     this.toString = function(unit) {
@@ -346,5 +339,16 @@ module.exports = function (num, unit) {
         var newCache = {};
         for (var key in angle) newCache[key] = angle[key];
         return (new Angle).milliseconds(milliseconds).setAngleCache(newCache);
+    }
+
+    // 初始值设定
+    if (typeof num === 'number') _cp(unit, num);
+    else if (typeof num === 'object') {
+        if (unit == 'dac') this.DAComplex(num);
+        if (unit == 'hac') this.HAComplex(num);
+    }
+    else if (typeof num === 'string') {
+        if (unit == 'dacs') this.DACString(num);
+        if (unit == 'hacs') this.HACString(num);
     }
 };
