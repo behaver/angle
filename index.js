@@ -261,27 +261,33 @@ module.exports = function (num, unit) {
         }
     }
 
+    /**
+     * 设置/获取 DAC字符串
+     * 
+     * @param {[type]} str [description]
+     */
     this.DACString = function(str) {
         if (str === undefined) { // 获取
             var dac = this.DAComplex();
-            return dac.d + '°' + dac.m + '′' + (dac.s + dac.ms / 1000) + '"';
+            return dac.d + '°' + dac.m + '′' + (dac.s + dac.ms / 1000) + '″';
         } else { // 设置
-            let r = str.match(/^([-+]?\d+)[^\d-+]+(?:(\d+)[^\d-+]+(?:(\d+)(?:.(\d+))?[^\d-+]*)?)?/);
+            let r = str.match(/^([-+]?\d+)[°|d]\s*(?:(\d+)[′|m]\s*(?:(\d+)(?:\.(\d+))?[″|s]\s*(?:(\d+)ms\s*)?)?)?/);
             if (r) {
-                r[4]  = r[4] ? '0.' + r[4] : '0';
+                if (r[5] !== undefined) var _ms = parseFloat(r[5]);
+                else var _ms  = r[4] ? parseFloat('0.' + r[4]) * 1000 : 0;
                 angle = { 
                     dac: {
-                        d: parseInt(r[1]),
-                        m: parseInt(r[2]),
+                        d: r[1] ? parseInt(r[1]) : 0,
+                        m: r[2] ? parseInt(r[2]) : 0,
                         s: r[3] ? parseInt(r[3]) : 0,
-                        ms: parseFloat(r[4]) * 1000
+                        ms: _ms,
                     }
                 };
 
                 if (angle.dac.d < 0) {
-                    angle.dac.m = - angle.dac.m;
-                    angle.dac.s = - angle.dac.s;
-                    angle.dac.ms = - angle.dac.ms;
+                    angle.dac.m = -angle.dac.m;
+                    angle.dac.s = -angle.dac.s;
+                    angle.dac.ms = -angle.dac.ms;
                 };
             } else {
                 throw Error('Illagelity parameters.');
@@ -290,27 +296,34 @@ module.exports = function (num, unit) {
         }
     }
 
+    /**
+     * 设置/获取 HAC字符串
+     * 
+     * @param {[type]} str [description]
+     */
     this.HACString = function(str) {
         if (str === undefined) { // 获取
-            var hac = this.DAComplex();
-            return hac.d + 'h' + hac.m + 'm' + hac.s + 's' + hac.ms + 'ms';
+            var hac = this.HAComplex();
+            return hac.h + 'h ' + hac.m + 'm ' + hac.s + 's ' + hac.ms + 'ms';
         } else { // 设置
-            let r = a.match(/^([-+]?\d+)[^\d-+]+(?:(\d+)[^\d-+]+(?:(\d+)(?:.(\d+))?[^\d-+]*)?)?/);
+            let r = str.match(/^([-+]?\d+)h\s*(?:(\d+)m\s*(?:(\d+)(?:\.(\d+))?s\s*(?:(\d+)ms\s*)?)?)?/);
             if (r) {
-                r[4]  = r[4] ? '0.' + r[4] : '0';
+                if (r[5] !== undefined) var _ms = parseFloat(r[5]);
+                else var _ms  = r[4] ? parseFloat('0.' + r[4]) * 1000 : 0;
+
                 angle = { 
-                    dac: {
-                        d: parseInt(r[1]),
-                        m: parseInt(r[2]),
+                    hac: {
+                        h: r[1] ? parseInt(r[1]) : 0,
+                        m: r[2] ? parseInt(r[2]) : 0,
                         s: r[3] ? parseInt(r[3]) : 0,
-                        ms: parseFloat(r[4]) * 1000
+                        ms: _ms,
                     }
                 };
 
-                if (angle.dac.d < 0) {
-                    angle.dac.m = - angle.dac.m;
-                    angle.dac.s = - angle.dac.s;
-                    angle.dac.ms = - angle.dac.ms;
+                if (angle.hac.h < 0) {
+                    angle.hac.m = -angle.hac.m;
+                    angle.hac.s = -angle.hac.s;
+                    angle.hac.ms = -angle.hac.ms;
                 };
             } else {
                 throw Error('Illagelity parameters.');
@@ -319,6 +332,12 @@ module.exports = function (num, unit) {
         return this;
     }
 
+    /**
+     * [toString description]
+     * 
+     * @param  {[type]} unit [description]
+     * @return {[type]}      [description]
+     */
     this.toString = function(unit) {
         if (unit == undefined || unit == 'dac') return this.DACString();
         else if (unit == 'hac') return this.HACString();

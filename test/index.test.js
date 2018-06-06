@@ -2,7 +2,7 @@ let Angle = require('../index');
 let expect = require("chai").expect;
 
 describe('#index.js', () => {
-	describe('#__constructor()', () => {
+	describe('#constructor', () => {
 		it('`new Angle(..., "d")` should equal `(new Angle()).degrees(...)`', () => {
 			expect((new Angle(1, 'd')).milliseconds()).equal((new Angle()).degrees(1).milliseconds());
 		});
@@ -55,6 +55,40 @@ describe('#index.js', () => {
         });
         it('`seconds(1).DAComplex()` should equal { d: 0, m: 0, s: 1, ms: 0 }', () => {
             expect((new Angle(1, 's')).DAComplex()).to.deep.equal({ d: 0, m: 0, s: 1, ms: 0 });
+        });
+        // 符号一致性
+    });
+
+    describe('#DACString()', () => {
+        it('`(new Angle({ d: 128, m: 56, s: 28, ms: 52 }, "dac")).DACString()` should equal `128°56′28.052″`', () => {
+            expect((new Angle({ d: 128, m: 56, s: 28, ms: 52 }, "dac")).DACString()).equal('128°56′28.052″');
+        });
+        it('`DACString("128°56′28.45″").DAComplex()` should equal `{ d: 128, m: 56, s: 28, ms: 450 }`', () => {
+            expect((new Angle).DACString("128°56′28.45″").DAComplex()).to.deep.equal({ d: 128, m: 56, s: 28, ms: 450 });
+        });
+        it('`DACString("128d 56m 28s 45ms").DAComplex()` should equal `{ d: 128, m: 56, s: 28, ms: 45 }`', () => {
+            expect((new Angle).DACString("128d 56m 28s 45ms").DAComplex()).to.deep.equal({ d: 128, m: 56, s: 28, ms: 45 });
+        });
+    });
+
+    describe('#HACString()', () => {
+        it('`(new Angle({ h: 12, m: 0, s: 28, ms: 512 }, "hac")).HACString()` should equal `12h 0m 28s 512ms`', () => {
+            expect((new Angle({ h: 12, m: 0, s: 28, ms: 512 }, "hac")).HACString()).equal('12h 0m 28s 512ms');
+        });
+        it('`HACString("128h 56m 28s 45ms").HAComplex()` should equal `{ h: 128, m: 56, s: 28, ms: 45 }`', () => {
+            expect((new Angle).HACString("128h 56m 28s 45ms").HAComplex()).to.deep.equal({ h: 128, m: 56, s: 28, ms: 45 });
+        });
+        it('`HACString("128h 56m 28.45s").HAComplex()` should equal `{ h: 128, m: 56, s: 28, ms: 450 }`', () => {
+            expect((new Angle).HACString("128h 56m 28.45s").HAComplex()).to.deep.equal({ h: 128, m: 56, s: 28, ms: 450 });
+        });
+    });
+
+    describe('#toString()', () => {
+        it('toString() has no params.', () => {
+            expect((new Angle(12223443, 'ms')).toString()).equal('3°23′43.443″');
+        });
+        it('toString("hac")', () => {
+            expect((new Angle(122234430, 'ms')).toString('hac')).equal('2h 15m 48s 962ms');
         });
     });
 });
