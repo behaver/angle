@@ -269,7 +269,7 @@ module.exports = function (num, unit) {
     this.DACString = function(str) {
         if (str === undefined) { // 获取
             var dac = this.DAComplex();
-            return dac.d + '°' + dac.m + '′' + (dac.s + dac.ms / 1000) + '″';
+            return dac.d + '°' + dac.m + '′' + (dac.s + dac.ms / 1000).toFixed(3) + '″';
         } else { // 设置
             let r = str.match(/^([-+]?\d+)[°|d]\s*(?:(\d+)[′|m]\s*(?:(\d+)(?:\.(\d+))?[″|s]\s*(?:(\d+)ms\s*)?)?)?/);
             if (r) {
@@ -304,7 +304,7 @@ module.exports = function (num, unit) {
     this.HACString = function(str) {
         if (str === undefined) { // 获取
             var hac = this.HAComplex();
-            return hac.h + 'h ' + hac.m + 'm ' + hac.s + 's ' + hac.ms + 'ms';
+            return hac.h + 'h ' + hac.m + 'm ' + hac.s + 's ' + hac.ms.toFixed(2) + 'ms';
         } else { // 设置
             let r = str.match(/^([-+]?\d+)h\s*(?:(\d+)m\s*(?:(\d+)(?:\.(\d+))?s\s*(?:(\d+)ms\s*)?)?)?/);
             if (r) {

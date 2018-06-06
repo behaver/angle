@@ -54,7 +54,7 @@ describe('#index.js', () => {
             expect((new Angle({ d: 1, m: 1, s: 1, ms: 1 }, 'dac')).milliseconds()).equal(3661001);
         });
         it('`seconds(1).DAComplex()` should equal { d: 0, m: 0, s: 1, ms: 0 }', () => {
-            expect((new Angle(1, 's')).DAComplex()).to.deep.equal({ d: 0, m: 0, s: 1, ms: 0 });
+            expect((new Angle(1, 's')).DAComplex()).to.deep.equal({ d: 0, m: 0, s: 1, ms: 0.00 });
         });
         // 符号一致性
     });
@@ -73,7 +73,7 @@ describe('#index.js', () => {
 
     describe('#HACString()', () => {
         it('`(new Angle({ h: 12, m: 0, s: 28, ms: 512 }, "hac")).HACString()` should equal `12h 0m 28s 512ms`', () => {
-            expect((new Angle({ h: 12, m: 0, s: 28, ms: 512 }, "hac")).HACString()).equal('12h 0m 28s 512ms');
+            expect((new Angle({ h: 12, m: 0, s: 28, ms: 512 }, "hac")).HACString()).equal('12h 0m 28s 512.00ms');
         });
         it('`HACString("128h 56m 28s 45ms").HAComplex()` should equal `{ h: 128, m: 56, s: 28, ms: 45 }`', () => {
             expect((new Angle).HACString("128h 56m 28s 45ms").HAComplex()).to.deep.equal({ h: 128, m: 56, s: 28, ms: 45 });
@@ -88,7 +88,7 @@ describe('#index.js', () => {
             expect((new Angle(12223443, 'ms')).toString()).equal('3°23′43.443″');
         });
         it('toString("hac")', () => {
-            expect((new Angle(122234430, 'ms')).toString('hac')).equal('2h 15m 48s 962ms');
+            expect((new Angle(122234430, 'ms')).toString('hac')).equal('2h 15m 48s 962.00ms');
         });
     });
 });

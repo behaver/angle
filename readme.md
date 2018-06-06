@@ -77,7 +77,28 @@ console.log(a.toString());
 ```
 
 本例先后给定了 130°20′20.865″ 和 3h24m30s453ms 两个角度值，最后分别输出：
-`` 和 ``
+
+`8h 41m 22s 57.67ms` 和 `51°7′36.795″`
+
+---
+
+使用 *复合字符串* 定义角度值：
+
+```js
+var Angle = require('@behaver/angle');
+var a = new Angle('33°33′33.333″');
+// 或者你也可以使用下面这种方法定义
+// a.DACString('33°33′33.333″');
+console.log(a.DAComplex());
+
+var b = new Angle;
+b.HACString('12h 23m 34s 456ms');
+console.log(b.HAComplex());
+```
+
+本例输出：
+
+`{ d: 33, m: 33, s: 33, ms: 333 }` 和 `{ h: 12, m: 23, s: 34, ms: 456 }`
 
 ## API
 
