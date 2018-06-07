@@ -176,4 +176,4 @@ console.log(a.inRound(2 * Math.PI, 'r').degrees());
 
 ## 许可证书
 
-The *ISC* license.
+The ISC license.
