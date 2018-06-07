@@ -171,5 +171,5 @@ console.log(a.inRound(2 * Math.PI, 'r').degrees());
 * `ts` 时角秒
 * `tms` 时角毫秒
 
-其中 from 缺省值为 0，unit 的缺省值为 'd'
+其中 from 参数的缺省值为 0，unit 参数的缺省值为 'd'
 
