@@ -44,6 +44,9 @@ describe('#index.js', () => {
         it('`tMilliseconds(1).HAComplex()` should equal { h: 0, m: 0, s: 0, ms: 1 }', () => {
             expect((new Angle(1, 'tms')).HAComplex()).to.deep.equal({ h: 0, m: 0, s: 0, ms: 1 });
         });
+        it('`HAComplex(1, -1, 1, 1) should to throw an Error`', () => {
+            expect(function() {(new Angle).HAComplex({ h: 1, m: -1, s: 1, ms: 1 })}).to.throw();
+        });
     });
 
     describe('#DAComplex()', () => {
@@ -56,7 +59,9 @@ describe('#index.js', () => {
         it('`seconds(1).DAComplex()` should equal { d: 0, m: 0, s: 1, ms: 0 }', () => {
             expect((new Angle(1, 's')).DAComplex()).to.deep.equal({ d: 0, m: 0, s: 1, ms: 0.00 });
         });
-        // 符号一致性
+        it('`DAComplex(1, -1, 1, 1) should to throw an Error`', () => {
+            expect(function() {(new Angle({ d: 1, m: -1, s: 1, ms: 1 }, 'dac'))}).to.throw();
+        });
     });
 
     describe('#DACString()', () => {
@@ -69,6 +74,9 @@ describe('#index.js', () => {
         it('`DACString("128d 56m 28s 45ms").DAComplex()` should equal `{ d: 128, m: 56, s: 28, ms: 45 }`', () => {
             expect((new Angle).DACString("128d 56m 28s 45ms").DAComplex()).to.deep.equal({ d: 128, m: 56, s: 28, ms: 45 });
         });
+        it('`(new Angle({ d: -128, m: -56, s: -28, ms: -52 }, "dac")).DACString()` should equal `-128°56′28.052″`', () => {
+            expect((new Angle({ d: -128, m: -56, s: -28, ms: -52 }, "dac")).DACString()).equal('-128°56′28.052″');
+        });
     });
 
     describe('#HACString()', () => {
@@ -80,6 +88,9 @@ describe('#index.js', () => {
         });
         it('`HACString("128h 56m 28.45s").HAComplex()` should equal `{ h: 128, m: 56, s: 28, ms: 450 }`', () => {
             expect((new Angle).HACString("128h 56m 28.45s").HAComplex()).to.deep.equal({ h: 128, m: 56, s: 28, ms: 450 });
+        });
+        it('`(new Angle({ h: -12, m: 0, s: -28, ms: -512 }, "hac")).HACString()` should equal `-12h 0m 28s 512ms`', () => {
+            expect((new Angle({ h: -12, m: 0, s: -28, ms: -512 }, "hac")).HACString()).equal('-12h 0m 28s 512.00ms');
         });
     });
 

@@ -195,11 +195,13 @@ module.exports = function (num, unit) {
             if (_s >= 60 || _s <= -60) throw Error('The range of tSeconds must be (-60, 60).');
             if (_ms >= 1000 || _ms <= -1000) throw Error('The range of tMilliseconds must be (-1000, 1000).');
             
-            angle = {
-                hac: { h: _h, m: _m, s: _s, ms: _ms }
-            };
+            if (_h >= 0 && _m >= 0 && _s >= 0 && _ms >= 0 || _h <= 0 && _m <= 0 && _s <= 0 && _ms <= 0) {
+                angle = {
+                    hac: { h: _h, m: _m, s: _s, ms: _ms }
+                };
 
-            milliseconds = angle.hac.h * scalesMap['th'] + angle.hac.m * scalesMap['tm'] + angle.hac.s * scalesMap['ts'] + angle.hac.ms * scalesMap['tms'];
+                milliseconds = angle.hac.h * scalesMap['th'] + angle.hac.m * scalesMap['tm'] + angle.hac.s * scalesMap['ts'] + angle.hac.ms * scalesMap['tms'];
+            } else throw Error('The signs must be consistent');
 
             return this;
         }
@@ -250,12 +252,14 @@ module.exports = function (num, unit) {
             if (_m >= 60 || _m <= -60) throw Error('The range of tMinutes must be (-60, 60).');
             if (_s >= 60 || _s <= -60) throw Error('The range of tSeconds must be (-60, 60).');
             if (_ms >= 1000 || _ms <= -1000) throw Error('The range of tMilliseconds must be (-1000, 1000).');
-            
-            angle = {
-                dac: { d: _d, m: _m, s: _s, ms: _ms }
-            };
 
-            milliseconds = angle.dac.d * scalesMap['d'] + angle.dac.m * scalesMap['m'] + angle.dac.s * scalesMap['s'] + angle.dac.ms * scalesMap['ms'];
+            if (_d >= 0 && _m >= 0 && _s >= 0 && _ms >= 0 || _d <= 0 && _m <= 0 && _s <= 0 && _ms <= 0) {
+                angle = {
+                    dac: { d: _d, m: _m, s: _s, ms: _ms }
+                };
+
+                milliseconds = angle.dac.d * scalesMap['d'] + angle.dac.m * scalesMap['m'] + angle.dac.s * scalesMap['s'] + angle.dac.ms * scalesMap['ms'];
+            } else throw Error('The signs must be consistent');
 
             return this;
         }
@@ -269,7 +273,9 @@ module.exports = function (num, unit) {
     this.DACString = function(str) {
         if (str === undefined) { // 获取
             var dac = this.DAComplex();
-            return dac.d + '°' + dac.m + '′' + (dac.s + dac.ms / 1000).toFixed(3) + '″';
+            if (dac.d < 0 || dac.m < 0 || dac.s < 0 || dac.ms < 0) {
+                return '-' + Math.abs(dac.d) + '°' + Math.abs(dac.m) + '′' + Math.abs(dac.s + dac.ms / 1000).toFixed(3) + '″';
+            } else return dac.d + '°' + dac.m + '′' + (dac.s + dac.ms / 1000).toFixed(3) + '″';
         } else { // 设置
             let r = str.match(/^([-+]?\d+)[°|d]\s*(?:(\d+)[′|m]\s*(?:(\d+)(?:\.(\d+))?[″|s]\s*(?:(\d+)ms\s*)?)?)?/);
             if (r) {
@@ -304,7 +310,9 @@ module.exports = function (num, unit) {
     this.HACString = function(str) {
         if (str === undefined) { // 获取
             var hac = this.HAComplex();
-            return hac.h + 'h ' + hac.m + 'm ' + hac.s + 's ' + hac.ms.toFixed(2) + 'ms';
+            if (hac.h < 0 || hac.m < 0 || hac.s < 0 || hac.ms < 0) {
+                return '-' + Math.abs(hac.h) + 'h ' + Math.abs(hac.m) + 'm ' + Math.abs(hac.s) + 's ' + Math.abs(hac.ms).toFixed(2) + 'ms';
+            } else return hac.h + 'h ' + hac.m + 'm ' + hac.s + 's ' + hac.ms.toFixed(2) + 'ms';
         } else { // 设置
             let r = str.match(/^([-+]?\d+)h\s*(?:(\d+)m\s*(?:(\d+)(?:\.(\d+))?s\s*(?:(\d+)ms\s*)?)?)?/);
             if (r) {
