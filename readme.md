@@ -1,4 +1,4 @@
-# Angle JS模块
+# Angle nodejs模块
 
 [![GitHub license](https://img.shields.io/badge/license-ISC-green.svg)](#) [![npm version](https://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/@behaver/angle) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
 
@@ -86,7 +86,7 @@ console.log(a.toString());
 
 ```js
 var Angle = require('@behaver/angle');
-var a = new Angle('33°33′33.333″');
+var a = new Angle('33°33′33.333″', 'dac');
 // 或者你也可以使用下面这种方法定义
 // a.DACString('33°33′33.333″');
 console.log(a.DAComplex());
@@ -99,6 +99,20 @@ console.log(b.HAComplex());
 本例输出：
 
 `{ d: 33, m: 33, s: 33, ms: 333 }` 和 `{ h: 12, m: 23, s: 34, ms: 456 }`
+
+---
+
+将 *角度值* 转换至给定的 *圆周范围* 内：
+
+```js
+var Angle = require('@behaver/angle');
+var a = new Angle(361, 'd');
+console.log(a.inRound().degrees());
+console.log(a.inRound(360).degrees());
+console.log(a.inRound(2 * Math.PI, 'r').degrees());
+```
+
+本例输出：`1` 、 `361` 和 `361`
 
 ## API
 
@@ -143,4 +157,19 @@ console.log(b.HAComplex());
 
 `toString(unit)`
 获取 **复合度角\时角** 字符串
+
+`inRound(from, unit)`
+转换角度至 *[from, from+360°)* 的数值范围，unit 参数用于指定 from 的单位，包含以下取值：
+
+* `d` 角度
+* `m` 角分
+* `s` 角秒
+* `ms` 角毫秒
+* `r` 弧度
+* `th` 时角时
+* `tm` 时角分
+* `ts` 时角秒
+* `tms` 时角毫秒
+
+其中 from 缺省值为 0，unit 的缺省值为 'd'
 

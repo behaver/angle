@@ -275,20 +275,20 @@ module.exports = function (num, unit) {
             if (r) {
                 if (r[5] !== undefined) var _ms = parseFloat(r[5]);
                 else var _ms  = r[4] ? parseFloat('0.' + r[4]) * 1000 : 0;
-                angle = { 
-                    dac: {
-                        d: r[1] ? parseInt(r[1]) : 0,
-                        m: r[2] ? parseInt(r[2]) : 0,
-                        s: r[3] ? parseInt(r[3]) : 0,
-                        ms: _ms,
-                    }
+                dac = {
+                    d: r[1] ? parseInt(r[1]) : 0,
+                    m: r[2] ? parseInt(r[2]) : 0,
+                    s: r[3] ? parseInt(r[3]) : 0,
+                    ms: _ms,
                 };
 
-                if (angle.dac.d < 0) {
-                    angle.dac.m = -angle.dac.m;
-                    angle.dac.s = -angle.dac.s;
-                    angle.dac.ms = -angle.dac.ms;
+                if (dac.d < 0) {
+                    dac.m = -dac.m;
+                    dac.s = -dac.s;
+                    dac.ms = -dac.ms;
                 };
+
+                this.DAComplex(dac);
             } else {
                 throw Error('Illagelity parameters.');
             }
@@ -311,20 +311,20 @@ module.exports = function (num, unit) {
                 if (r[5] !== undefined) var _ms = parseFloat(r[5]);
                 else var _ms  = r[4] ? parseFloat('0.' + r[4]) * 1000 : 0;
 
-                angle = { 
-                    hac: {
-                        h: r[1] ? parseInt(r[1]) : 0,
-                        m: r[2] ? parseInt(r[2]) : 0,
-                        s: r[3] ? parseInt(r[3]) : 0,
-                        ms: _ms,
-                    }
+                var hac = { 
+                    h: r[1] ? parseInt(r[1]) : 0,
+                    m: r[2] ? parseInt(r[2]) : 0,
+                    s: r[3] ? parseInt(r[3]) : 0,
+                    ms: _ms,
                 };
 
-                if (angle.hac.h < 0) {
-                    angle.hac.m = -angle.hac.m;
-                    angle.hac.s = -angle.hac.s;
-                    angle.hac.ms = -angle.hac.ms;
+                if (hac.h < 0) {
+                    hac.m = -hac.m;
+                    hac.s = -hac.s;
+                    hac.ms = -hac.ms;
                 };
+
+                this.HAComplex(hac);
             } else {
                 throw Error('Illagelity parameters.');
             }
@@ -344,44 +344,21 @@ module.exports = function (num, unit) {
     }
 
     /**
-     * 将角度转换为一周之内
+     * 将角度转化至 给定的区间 的圆周之内
      * 
-     * @return {[type]} [description]
+     * @param  {[type]} from [description]
+     * @return {[type]}     [description]
      */
-    this.inRound = function () {
-        milliseconds %= 1296000000;
-        if (milliseconds < 0) milliseconds += 1296000000;
-        angle = {};
+    this.inRound = function (from, unit) {
+        if (from == undefined) from = 0;
+        if (unit == undefined) unit = 'd';
+        if (unit in scalesMap) {
+            var from_ms = from * scalesMap[unit];
+            var T_ms = 1296000000;
+            milliseconds += Math.ceil((from_ms - milliseconds) / T_ms) * T_ms;
+            angle = {};
+        } else throw Error('unknow unit.');
         return this;
-    }
-
-    /**
-     * 将角度转化为 -180 到 180 之间
-     * 
-     * @return {[type]} [description]
-     */
-    this.inHalf = function () {
-        this.inRound();
-        if (milliseconds > 648000000) milliseconds -= 1296000000;
-        return this;
-    }
-
-    this.inRange = function (min, max) {
-        if (max - min >= 360) {
-
-        } else throw Error('Illagelity parameters.');
-        return this;
-    }
-
-    this.setAngleCache = function (angleCache) {
-        angle = angleCache;
-        return this;
-    }
-
-    this.clone = function () {
-        var newCache = {};
-        for (var key in angle) newCache[key] = angle[key];
-        return (new Angle).milliseconds(milliseconds).setAngleCache(newCache);
     }
 
     // 初始值设定

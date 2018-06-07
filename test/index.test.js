@@ -91,4 +91,49 @@ describe('#index.js', () => {
             expect((new Angle(122234430, 'ms')).toString('hac')).equal('2h 15m 48s 962.00ms');
         });
     });
+
+    describe('#inRound()', () => {
+        it('360° inRound from 361° should equal 720°', () => {
+            expect((new Angle(360, 'd')).inRound(361, 'd').degrees()).equal(720);
+        });
+        it('361° inRound from 361° should equal 361°', () => {
+            expect((new Angle(361, 'd')).inRound(361, 'd').degrees()).equal(361);
+        });
+        it('362° inRound from 361° should equal 362°', () => {
+            expect((new Angle(362, 'd')).inRound(361, 'd').degrees()).equal(362);
+        });
+        it('720° inRound from 361° should equal 720°', () => {
+            expect((new Angle(720, 'd')).inRound(361, 'd').degrees()).equal(720);
+        });
+        it('721° inRound from 361° should equal 361°', () => {
+            expect((new Angle(721, 'd')).inRound(361, 'd').degrees()).equal(361);
+        });
+        it('722° inRound from 361° should equal 362°', () => {
+            expect((new Angle(722, 'd')).inRound(361, 'd').degrees()).equal(362);
+        });
+        it('359° inRound from 2π should equal 719°', () => {
+            expect((new Angle(359, 'd')).inRound(2 * Math.PI, 'r').degrees()).equal(719);
+        });
+        it('2π inRound from 361° should equal 720°', () => {
+            expect((new Angle(2 * Math.PI, 'r')).inRound(361, 'd').degrees()).equal(720);
+        });
+        it('-1° inRound should equal 359°', () => {
+            expect((new Angle(-1, 'd')).inRound().degrees()).equal(359);
+        });
+        it('0° inRound should equal 0°', () => {
+            expect((new Angle(0, 'd')).inRound().degrees()).equal(0);
+        });
+        it('1° inRound should equal 1°', () => {
+            expect((new Angle(1, 'd')).inRound().degrees()).equal(1);
+        });
+        it('359° inRound should equal 359°', () => {
+            expect((new Angle(359, 'd')).inRound().degrees()).equal(359);
+        });
+        it('360° inRound should equal 0°', () => {
+            expect((new Angle(360, 'd')).inRound().degrees()).equal(0);
+        });
+        it('361° inRound should equal 1°', () => {
+            expect((new Angle(361, 'd')).inRound().degrees()).equal(1);
+        });
+    });
 });
