@@ -174,3 +174,6 @@ console.log(a.inRound(2 * Math.PI, 'r').degrees());
 
 其中 from 参数的缺省值为 0，unit 参数的缺省值为 'd'
 
+## 许可证书
+
+*ISC* 许可证书
