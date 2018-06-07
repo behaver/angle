@@ -6,7 +6,7 @@
  * Angle 对象用于处理各种角度单位数值
  * 
  * @author 董三碗 <qianxing@yeah.net>
- * @version 1.1.0
+ * @version 1.1.1
  */
 module.exports = function (num, unit) {
 
