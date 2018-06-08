@@ -4,8 +4,23 @@
  * Angle
  * 
  * Angle 对象用于处理各种角度数值
- * 
- * @author 董三碗 <qianxing@yeah.net>
+ *
+ * @param  {number} num  需设置的角度数值，缺省为 0
+ * @param  {string} unit 数值单位，缺省为'd'，有下列可选值：
+ *   'd'    角度
+ *   'm'    角分
+ *   's'    角秒
+ *   'ms'   角毫秒
+ *   'r'    弧度
+ *   'th'   时角时
+ *   'tm'   时角分
+ *   'ts'   时角秒
+ *   'tms'  时角毫秒
+ *   'hac'  复合时角对象
+ *   'dac'  复合度角对象
+ *   'hacs' 复合时角字符串
+ *   'dacs' 复合度角字符串
+ * @author 董 三碗 <qianxing@yeah.net>
  * @version 1.1.2
  */
 module.exports = function (num, unit) {
@@ -394,7 +409,16 @@ module.exports = function (num, unit) {
      * 转换角度至 [from, from+360°) 的数值范围
      * 
      * @param  {number} from 限定圆周范围的起始角度数值，缺省为 0
-     * @param  {number} unit 设定起始角度数值的 单位，缺省为 'd'
+     * @param  {number} unit 设定起始角度数值的 单位，缺省为 'd'，有下列可选值：
+     *   'd'   角度
+     *   'm'   角分
+     *   's'   角秒
+     *   'ms'  角毫秒
+     *   'r'   弧度
+     *   'th'  时角时
+     *   'tm'  时角分
+     *   'ts'  时角秒
+     *   'tms' 时角毫秒
      * @return {object}      返回 this 引用
      */
     this.inRound = function (from, unit) {
