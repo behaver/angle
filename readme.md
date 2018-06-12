@@ -25,8 +25,8 @@
 ```js
 var Angle = require('@behaver/angle');
 var a = new Angle();
-a.radians(Math.PI);
-console.log(a.degrees());
+a.setRadians(Math.PI);
+console.log(a.getDegrees());
 ```
 
 本例将 **弧度值** 转化为 **角度值** ，将会输出数值： *180*
@@ -38,7 +38,7 @@ console.log(a.degrees());
 ```js
 var Angle = require('@behaver/angle');
 var a = new Angle(15, 'th');
-console.log(a.degrees());
+console.log(a.getDegrees());
 ```
 
 本例初始化了一个 *时角* 为 *15* 的角度对象，最后输出： *225*
@@ -66,9 +66,9 @@ Angle 构造函数的第二个参数为 *角度单位* ，可用参数包含：
 ```js
 var Angle = require('@behaver/angle');
 var a = new Angle();
-a.DAComplex(130, 20, 30, 865);
-console.log(a.HACString());
-a.HAComplex({
+a.setDAComplex(130, 20, 30, 865);
+console.log(a.makeHACString());
+a.setHAComplex({
 	h: 3,
 	m: 24,
 	s: 30,
@@ -89,12 +89,12 @@ console.log(a.toString());
 var Angle = require('@behaver/angle');
 var a = new Angle('33°33′33.333″', 'dac');
 // 或者你也可以使用下面这种方法定义
-// a.DACString('33°33′33.333″');
-console.log(a.DAComplex());
+// a.parseDACString('33°33′33.333″');
+console.log(a.getDAComplex());
 
 var b = new Angle;
-b.HACString('12h 23m 34s 456ms');
-console.log(b.HAComplex());
+b.parseHACString('12h 23m 34s 456ms');
+console.log(b.getHAComplex());
 ```
 
 本例输出：
@@ -108,53 +108,92 @@ console.log(b.HAComplex());
 ```js
 var Angle = require('@behaver/angle');
 var a = new Angle(361, 'd');
-console.log(a.inRound().degrees());
-console.log(a.inRound(360).degrees());
-console.log(a.inRound(2 * Math.PI, 'r').degrees());
+console.log(a.inRound().getDegrees());
+console.log(a.inRound(360).getDegrees());
+console.log(a.inRound(2 * Math.PI, 'r').getDegrees());
 ```
 
 本例输出：`1` 、 `361` 和 `361`
 
 ## API
 
-`degrees(num)`
-以 **角度** 为单位，获取/设置 角度数值
+`getDegrees()`
+以 **角度** 为单位，获取角度数值
 
-`minutes(num)`
-以 **角分** 为单位，获取/设置 角度数值
+`setDegrees(num)`
+以 **角度** 为单位，设置角度数值
 
-`seconds(num)`
-以 **角秒** 为单位，获取/设置 角度数值
+`getMinutes()`
+以 **角分** 为单位，获取角度数值
 
-`milliseconds(num)`
-以 **角毫秒** 为单位，获取/设置 角度数值
+`setMinutes(num)`
+以 **角分** 为单位，设置角度数值
 
-`radians(num)`
-以 **弧度** 为单位，获取/设置 角度数值
+`getSeconds()`
+以 **角秒** 为单位，获取角度数值
 
-`tHours(num)`
-以 **时角时** 为单位，获取/设置 角度数值
+`getSeconds(num)`
+以 **角秒** 为单位，设置角度数值
 
-`tMinutes(num)`
-以 **时角分** 为单位，获取/设置 角度数值
+`getMilliseconds()`
+以 **角毫秒** 为单位，获取角度数值
 
-`tSeconds(num)`
-以 **时角秒** 为单位，获取/设置 角度数值
+`setMilliseconds(num)`
+以 **角毫秒** 为单位，设置角度数值
 
-`tMilliseconds(num)`
-以 **时角毫秒** 为单位，获取/设置 角度数值
+`getRadian()`
+以 **弧度** 为单位，获取角度数值
 
-`HAComplex(h, m, s, ms)`
-以 **复合时角** 获取/设置 角度数值
+`setRadian(num)`
+以 **弧度** 为单位，设置角度数值
 
-`DAComplex(d, m, s, ms)`
-以 **复合度角** 获取/设置 角度数值
+`getTHours()`
+以 **时角时** 为单位，获取角度数值
 
-`HACString(str)`
-以 **复合时角字符串** 获取/设置 角度数值
+`setTHours(num)`
+以 **时角时** 为单位，设置角度数值
 
-`DACString(str)`
-以 **复合度角字符串** 获取/设置 角度数值
+`getTMinutes()`
+以 **时角分** 为单位，获取角度数值
+
+`setTMinutes(num)`
+以 **时角分** 为单位，设置角度数值
+
+`getTSeconds()`
+以 **时角秒** 为单位，获取角度数值
+
+`setTSeconds(num)`
+以 **时角秒** 为单位，设置角度数值
+
+`getTMilliseconds()`
+以 **时角毫秒** 为单位，获取角度数值
+
+`setTMilliseconds(num)`
+以 **时角毫秒** 为单位，设置角度数值
+
+`getHAComplex()`
+以 **复合时角** 获取角度数值
+
+`setHAComplex(h, m, s, ms)`
+以 **复合时角** 设置角度数值
+
+`getDAComplex()`
+以 **复合度角** 获取角度数值
+
+`setDAComplex(d, m, s, ms)`
+以 **复合度角** 设置角度数值
+
+`parseHACString(str)`
+解析 **复合时角字符串**，并以结果设置角度数值
+
+`makeHACString()`
+生成 **复合时角字符串**
+
+`parseDACString(str)`
+解析 **复合度角字符串**，并以结果设置角度数值
+
+`makeDACString()`
+生成 **复合度角字符串**
 
 `toString(unit)`
 获取 **复合度角\时角** 字符串
@@ -176,4 +215,4 @@ console.log(a.inRound(2 * Math.PI, 'r').degrees());
 
 ## 许可证书
 
-The ISC license.
+The MIT license.
