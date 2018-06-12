@@ -74,7 +74,7 @@ a.setHAComplex({
 	s: 30,
 	ms: 453,
 });
-console.log(a.toString());
+console.log(String(a));
 ```
 
 本例先后给定了 130°20′20.865″ 和 3h24m30s453ms 两个角度值，最后分别输出：
@@ -195,8 +195,8 @@ console.log(a.inRound(2 * Math.PI, 'r').getDegrees());
 `makeDACString()`
 生成 **复合度角字符串**
 
-`toString(unit)`
-获取 **复合度角\时角** 字符串
+`toString()`
+获取 **复合度角** 字符串
 
 `inRound(from, unit)`
 转换角度至 *[from, from+360°)* 的数值范围。unit 参数用于指定 from 的单位，包含以下取值：
