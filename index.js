@@ -77,7 +77,7 @@ class Angle {
    * 
    * @param  {String} unit 数值单位
    * @param  {Number} num  需设置的角度数值
-   * @return {Object}      返回 this 引用
+   * @return {Angle}       返回 this 引用
    */
   setValue(unit, num) {
     this.cache = {};
@@ -99,7 +99,7 @@ class Angle {
    * 以 角毫秒 为单位，设置角度数值
    * 
    * @param  {Number} num 需设置的 角毫秒 数值
-   * @return {Object}     返回 this 引用
+   * @return {Angle}      返回 this 引用
    */
   setMilliseconds(num) {
       this.cache = {};
@@ -120,7 +120,7 @@ class Angle {
    * 以 角秒 为单位，设置角度数值
    *
    * @param  {Number} num 需设置的 角秒 数值
-   * @return {Object}     返回 this 引用
+   * @return {Angle}      返回 this 引用
    */
   setSeconds(num) {
     return this.setValue('s', num);
@@ -139,7 +139,7 @@ class Angle {
    * 以 角分 为单位，设置角度数值
    * 
    * @param  {Number} num 需设置的 角分 数值
-   * @return {Object}     返回 this 引用
+   * @return {Angle}      返回 this 引用
    */
   setMinutes(num) {
     return this.setValue('m', num);
@@ -158,7 +158,7 @@ class Angle {
    * 以 角度 为单位，设置角度数值
    *
    * @param  {Number} num 需设置的 角度 数值
-   * @return {Object}     返回 this 引用
+   * @return {Angle}      返回 this 引用
    */
   setDegrees(num) {
     return this.setValue('d', num);
@@ -177,7 +177,7 @@ class Angle {
    * 以 弧度 为单位，设置角度数值
    *
    * @param  {Number} num 需设置的 弧度 数值
-   * @return {Object}     返回 this 引用
+   * @return {Angle}      返回 this 引用
    */
   setRadian(num) {
     return this.setValue('r', num);
@@ -196,7 +196,7 @@ class Angle {
    * 以 时角时 为单位，设置角度数值
    *
    * @param  {Number} num 需设置的 时角时 数值
-   * @return {Object}     返回 this 引用
+   * @return {Angle}      返回 this 引用
    */
   setTHours(num) {
     return this.setValue('th', num);
@@ -215,7 +215,7 @@ class Angle {
    * 以 时角分 为单位，设置角度数值
    *
    * @param  {Number} num 需设置的 时角分 数值
-   * @return {Object}     返回 this 引用
+   * @return {Angle}      返回 this 引用
    */
   setTMinutes(num) {
     return this.setValue('tm', num);
@@ -234,7 +234,7 @@ class Angle {
    * 以 时角秒 为单位，设置角度数值
    * 
    * @param  {Number} num 需设置的 时角秒 数值
-   * @return {Object}     返回 this 引用
+   * @return {Angle}      返回 this 引用
    */
   setTSeconds(num) {
     return this.setValue('ts', num);
@@ -253,7 +253,7 @@ class Angle {
    * 以 时角毫秒 为单位，获取角度数值
    *
    * @param  {Number} num 需设置的 时角毫秒 数值
-   * @return {Object}     返回 this 引用
+   * @return {Angle}      返回 this 引用
    */
   setTMilliseconds(num) {
     return this.setValue('tms', num);
@@ -286,7 +286,7 @@ class Angle {
    * @param  {Number} m   需设置的复合时角中 时角分部分 的数值
    * @param  {Number} s   需设置的复合时角中 时角秒部分 的数值
    * @param  {Number} ms  需设置的复合时角中 时角毫秒部分 的数值
-   * @return {Object}     返回 this 引用
+   * @return {Angle}      返回 this 引用
    */
   setHAComplex(h, m, s, ms) {
     if (typeof(h) === 'object') {
@@ -353,7 +353,7 @@ class Angle {
    * @param  {Number} m    需设置的复合度角中 度角分部分 的数值
    * @param  {Number} s    需设置的复合度角中 度角秒部分 的数值
    * @param  {Number} ms   需设置的复合度角中 度角毫秒部分 的数值
-   * @return {Object}      返回 this 引用
+   * @return {Angle}       返回 this 引用
    */
   setDAComplex(d, m, s, ms) {
     if (typeof(d) === 'object') {
@@ -395,7 +395,7 @@ class Angle {
    * 解析复合度角字符串，并以结果设置角度数值
    *
    * @param {String} str 需设置的 复合度角 字符串
-   * @return {Object}    返回 this 引用
+   * @return {Angle}     返回 this 引用
    */
   parseDACString(str) {
     let r = str.match(/^([-+]?\d+)[°|d]\s*(?:(\d+)[′|m]\s*(?:(\d+)(?:\.(\d+))?[″|s]\s*(?:(\d+)ms\s*)?)?)?/);
@@ -439,7 +439,7 @@ class Angle {
    * 解析复合时角字符串，并以结果设置角度数值
    *
    * @param {String} str  需设置的 复合时角 字符串
-   * @return {Object}     返回 this 引用
+   * @return {Angle}      返回 this 引用
    */
   parseHACString(str) {
     let r = str.match(/^([-+]?\d+)h\s*(?:(\d+)m\s*(?:(\d+)(?:\.(\d+))?s\s*(?:(\d+)ms\s*)?)?)?/);
@@ -493,7 +493,7 @@ class Angle {
    *   'tm'  时角分
    *   'ts'  时角秒
    *   'tms' 时角毫秒
-   * @return {Object}      返回 this 引用
+   * @return {Angle}       返回 this 引用
    */
   inRound(from = 0, unit = 'd') {
     if (unit in this.scalesMap) {
