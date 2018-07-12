@@ -4,11 +4,11 @@
 
 ## 简介
 
-顾名思义，Angle是一个用于处理 **角度单位** 的JS模块，创造它目的是为了 *更方便的处理角度数值*。它可以将任意角度单位数值进行 *转换* 。例如：将一个以 *度* 为单位数值转换为以 *弧度*。类似于JS中Date对象对时间处理，Angle也可以将你的角度数值作为一个字符串输出，例如：30°24′32.087″。
+Angle 是一个用于处理 **角度单位** 的JS模块，创造它目的是为了 *更方便的转换和处理角度数值*。它可以将任意角度单位数值进行 *转换* 。例如：将一个以 *度* 为单位数值转换为以 *弧度*。类似于JS中 Date 对象对时间处理，Angle 也可以将你的角度数值作为一个字符串输出，例如：30°24′32.087″。
 
 ## 功能
 
-1. 各 *角度单位* 下数值的转化/获取
+1. 各种 *角度单位* 下的数值的转化处理
 2. 读取/生成 *角度值* 标准化字符串
 3. 转换 *角度值* 至任意指定圆周范围内
 
@@ -23,8 +23,8 @@
 角度单位间数值的转换：
 
 ```js
-var Angle = require('@behaver/angle');
-var a = new Angle();
+const Angle = require('@behaver/angle');
+let a = new Angle();
 a.setRadians(Math.PI);
 console.log(a.getDegrees());
 ```
@@ -36,8 +36,8 @@ console.log(a.getDegrees());
 更简洁地，你可以通过 Angle 构造函数参数初始化对象：
 
 ```js
-var Angle = require('@behaver/angle');
-var a = new Angle(15, 'th');
+const Angle = require('@behaver/angle');
+let a = new Angle(15, 'th');
 console.log(a.getDegrees());
 ```
 
@@ -64,8 +64,8 @@ Angle 构造函数的第二个参数为 *角度单位* ，可用参数包含：
 使用 *复合角度对象* 并输出 *复合字符串* ：
 
 ```js
-var Angle = require('@behaver/angle');
-var a = new Angle();
+const Angle = require('@behaver/angle');
+let a = new Angle();
 a.setDAComplex(130, 20, 30, 865);
 console.log(a.makeHACString());
 a.setHAComplex({
@@ -86,13 +86,13 @@ console.log(String(a));
 使用 *复合字符串* 定义角度值：
 
 ```js
-var Angle = require('@behaver/angle');
-var a = new Angle('33°33′33.333″', 'dac');
+const Angle = require('@behaver/angle');
+let a = new Angle('33°33′33.333″', 'dac');
 // 或者你也可以使用下面这种方法定义
 // a.parseDACString('33°33′33.333″');
 console.log(a.getDAComplex());
 
-var b = new Angle;
+let b = new Angle;
 b.parseHACString('12h 23m 34s 456ms');
 console.log(b.getHAComplex());
 ```
@@ -106,8 +106,8 @@ console.log(b.getHAComplex());
 将 *角度值* 转换至给定的 *圆周范围* 内：
 
 ```js
-var Angle = require('@behaver/angle');
-var a = new Angle(361, 'd');
+const Angle = require('@behaver/angle');
+let a = new Angle(361, 'd');
 console.log(a.inRound().getDegrees());
 console.log(a.inRound(360).getDegrees());
 console.log(a.inRound(2 * Math.PI, 'r').getDegrees());
