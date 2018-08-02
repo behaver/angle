@@ -14,7 +14,67 @@ describe('#index.js', () => {
     })
   });
 
+  describe('#setMilliseconds', () => {
+    it('The param num should be a Number', () => {
+      expect(() => {
+        let x = (new Angle(120, 'd')).setMilliseconds('d');
+      }).to.throw();
+      expect(() => {
+        let x = (new Angle(120, 'd')).setMilliseconds({});
+      }).to.throw();
+    });
+  })
+
   describe('#setValue() && #getValue()', () => {
+    it('The param unit of getValue should be a String', () => {
+      expect(() => {
+        let x = (new Angle(120, 'd')).getValue(12);
+      }).to.throw();
+      expect(() => {
+        let x = (new Angle(120, 'd')).getValue({});
+      }).to.throw();
+    });
+    it('The param unit of getValue should be valueble', () => {
+      expect(() => {
+        let x = (new Angle(120, 'd')).getValue('x');
+      }).to.throw();
+      expect(() => {
+        let x = (new Angle(120, 'd')).getValue('');
+      }).to.throw();
+      expect(() => {
+        let x = (new Angle(120, 'd')).getValue('ts');
+      }).not.to.throw();
+    });
+
+    it('The param unit of setValue should be a String', () => {
+      expect(() => {
+        let x = (new Angle(120, 'd')).setValue(12, 12);
+      }).to.throw();
+      expect(() => {
+        let x = (new Angle(120, 'd')).setValue({}, 12);
+      }).to.throw();
+    });
+    it('The param unit of setValue should be valueble', () => {
+      expect(() => {
+        let x = (new Angle(120, 'd')).setValue('x', 12);
+      }).to.throw();
+      expect(() => {
+        let x = (new Angle(120, 'd')).setValue('', 12);
+      }).to.throw();
+      expect(() => {
+        let x = (new Angle(120, 'd')).setValue('ts', 12);
+      }).not.to.throw();
+    });
+
+    it('The param num of setValue should be a Number', () => {
+      expect(() => {
+        let x = (new Angle(120, 'd')).setValue('d', 'd');
+      }).to.throw();
+      expect(() => {
+        let x = (new Angle(120, 'd')).setValue('d', {});
+      }).to.throw();
+    });
+
     it('1° = 60′ = 3600″ = 360000ms', () => {
       expect((new Angle(1, 'd')).getMilliseconds())
         .equal((new Angle(60, 'm')).getMilliseconds())
@@ -70,7 +130,22 @@ describe('#index.js', () => {
     });
   });
 
-  describe('#parseDACString()', () => {
+  describe('#parseDACString(str)', () => {
+    it('The param str should be a String.', () => {
+      expect(() => {
+        (new Angle).parseDACString({});
+      }).to.throw();
+      expect(() => {
+        (new Angle).parseDACString(12);
+      }).to.throw();
+    });
+
+    it('The param str should be a HAC String.', () => {
+      expect(() => {
+        (new Angle).parseDACString('123');
+      }).to.throw();
+    });
+
     it('`parseDACString("128°56′28.45″").getDAComplex()` should equal `{ d: 128, m: 56, s: 28, ms: 450 }`', () => {
       expect((new Angle).parseDACString("128°56′28.45″").getDAComplex()).to.deep.equal({ d: 128, m: 56, s: 28, ms: 450 });
     });
@@ -88,7 +163,22 @@ describe('#index.js', () => {
     });
   });
 
-  describe('#parseHACString()', () => {
+  describe('#parseHACString(str)', () => {
+    it('The param str should be a String.', () => {
+      expect(() => {
+        (new Angle).parseHACString({});
+      }).to.throw();
+      expect(() => {
+        (new Angle).parseHACString(12);
+      }).to.throw();
+    });
+
+    it('The param str should be a HAC String.', () => {
+      expect(() => {
+        (new Angle).parseHACString('123');
+      }).to.throw();
+    });
+
     it('`parseHACString("128h 56m 28s 45ms").getHAComplex()` should equal `{ h: 128, m: 56, s: 28, ms: 45 }`', () => {
       expect((new Angle).parseHACString("128h 56m 28s 45ms").getHAComplex()).to.deep.equal({ h: 128, m: 56, s: 28, ms: 45 });
     });
@@ -107,6 +197,35 @@ describe('#index.js', () => {
   });
 
   describe('#inRound()', () => {
+    it('The param unit should be a String', () => {
+      expect(() => {
+        let x = (new Angle(120, 'd')).inRound(12, 12);
+      }).to.throw();
+      expect(() => {
+        let x = (new Angle(120, 'd')).inRound(12, {});
+      }).to.throw();
+    });
+    it('The param unit should be valueble', () => {
+      expect(() => {
+        let x = (new Angle(120, 'd')).inRound(12, 'x');
+      }).to.throw();
+      expect(() => {
+        let x = (new Angle(120, 'd')).inRound(12, '');
+      }).to.throw();
+      expect(() => {
+        let x = (new Angle(120, 'd')).inRound(12, 'ts');
+      }).not.to.throw();
+    });
+
+    it('The param from should be a Number', () => {
+      expect(() => {
+        let x = (new Angle(120, 'd')).inRound('d', 'd');
+      }).to.throw();
+      expect(() => {
+        let x = (new Angle(120, 'd')).inRound({}, 'd');
+      }).to.throw();
+    });
+
     it('360° inRound from 361° should equal 720°', () => {
       expect((new Angle(360, 'd')).inRound(361, 'd').getDegrees()).equal(720);
     });

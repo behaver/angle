@@ -6,7 +6,7 @@
  * Angle 对象用于处理各种角度数值
  *
  * @author 董 三碗 <qianxing@yeah.net>
- * @version 2.0.0
+ * @version 2.0.1
  */
 class Angle {
 
@@ -66,7 +66,8 @@ class Angle {
    * @return {Number}      返回角度数值
    */
   getValue(unit) {
-    if (unit && unit in this.scalesMap) {
+    if (typeof(unit) !== 'string') throw Error('The param unit should be a String.');
+    if (unit in this.scalesMap) {
       if (this.cache[unit] === undefined) return this.cache[unit] = this.milliseconds / this.scalesMap[unit];
       else return this.cache[unit];
     } else throw Error('Unknow angle unit.');
@@ -80,9 +81,13 @@ class Angle {
    * @return {Angle}       返回 this 引用
    */
   setValue(unit, num) {
-    this.cache = {};
-    this.cache[unit] = num;
-    this.milliseconds = num * this.scalesMap[unit];
+    if (typeof(unit) !== 'string') throw Error('The param unit should be a String.');
+    if (typeof(num) !== 'number') throw Error('The param num should be a Number.');
+    if (unit in this.scalesMap) {
+      this.cache = {};
+      this.cache[unit] = num;
+      this.milliseconds = num * this.scalesMap[unit];
+    } else throw Error('Illagelity param unit.');
     return this;
   }
 
@@ -92,7 +97,7 @@ class Angle {
    * @return {Number}     返回 角毫秒 数值
    */
   getMilliseconds() {
-      return this.milliseconds;
+    return this.milliseconds;
   }
 
   /**
@@ -102,9 +107,10 @@ class Angle {
    * @return {Angle}      返回 this 引用
    */
   setMilliseconds(num) {
-      this.cache = {};
-      this.milliseconds = num;
-      return this;
+    if (typeof(num) !== 'number') throw Error('The param num should be a Number.');
+    this.cache = {};
+    this.milliseconds = num;
+    return this;
   }
 
   /**
@@ -398,6 +404,7 @@ class Angle {
    * @return {Angle}     返回 this 引用
    */
   parseDACString(str) {
+    if (typeof(str) !== 'string') throw Error('The param str should be a String.');
     let r = str.match(/^([-+]?\d+)[°|d]\s*(?:(\d+)[′|m]\s*(?:(\d+)(?:\.(\d+))?[″|s]\s*(?:(\d+)ms\s*)?)?)?/);
     if (r) {
       // 两种 ms 字符串给定方式的判别处理
@@ -442,6 +449,7 @@ class Angle {
    * @return {Angle}      返回 this 引用
    */
   parseHACString(str) {
+    if (typeof(str) !== 'string') throw Error('The param str should be a String.');
     let r = str.match(/^([-+]?\d+)h\s*(?:(\d+)m\s*(?:(\d+)(?:\.(\d+))?s\s*(?:(\d+)ms\s*)?)?)?/);
     if (r) {
       // 两种 ms 字符串给定方式的判别处理
@@ -483,7 +491,7 @@ class Angle {
    * 转换角度至 [from, from+360°) 的数值范围
    * 
    * @param  {Number} from 限定圆周范围的起始角度数值，缺省为 0
-   * @param  {Number} unit 设定起始角度数值的 单位，缺省为 'd'，有下列可选值：
+   * @param  {String} unit 设定起始角度数值的 单位，缺省为 'd'，有下列可选值：
    *   'd'   角度
    *   'm'   角分
    *   's'   角秒
@@ -496,6 +504,8 @@ class Angle {
    * @return {Angle}       返回 this 引用
    */
   inRound(from = 0, unit = 'd') {
+    if (typeof(unit) !== 'string') throw Error('The param unit should be a String.');
+    if (typeof(from) !== 'number') throw Error('The param from should be a Number.');
     if (unit in this.scalesMap) {
       let from_ms = from * this.scalesMap[unit];
       let T_ms = 1296000000;
@@ -510,7 +520,7 @@ class Angle {
    * 
    * @return {String}      返回 复合度角 字符串
    */
-  toString(unit = 'dac') {
+  toString() {
     return this.makeDACString();
   }
 };
