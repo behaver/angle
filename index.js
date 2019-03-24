@@ -6,7 +6,7 @@
  * Angle 对象用于处理各种角度数值
  *
  * @author 董 三碗 <qianxing@yeah.net>
- * @version 2.0.1
+ * @version 2.0.2
  */
 class Angle {
 
